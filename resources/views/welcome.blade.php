@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor Keuangan Pribadi - Mockup</title>
+    <title>Keuangan Saya - Kelola Uang dengan Cerdas</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa; /* Light gray background */
+            color: #333;
         }
         .scroll-container {
             -ms-overflow-style: none; /* IE and Edge */
@@ -23,176 +24,124 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- Header / Navbar -->
-    <header class="bg-white shadow-sm p-4 sticky top-0 z-10">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold text-gray-800">
-                <a href="#" class="hover:text-indigo-600 transition-colors">💵 Keuangan Saya</a>
-            </h1>
-            <nav>
-                <ul class="flex space-x-6 text-gray-600">
-                    <li><a href="#" class="hover:text-indigo-600 font-medium">Dasbor</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Transaksi</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Anggaran</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Tujuan</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Laporan</a></li>
-                </ul>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <button class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors">
-                    + Transaksi Baru
-                </button>
-                <!-- Placeholder for User Avatar/Menu -->
-                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">
-                    AB
+<x-header />
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-16 md:py-24 text-center px-4 rounded-b-xl shadow-lg">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                Kendali Penuh Atas Keuangan Anda, <span class="block">Mulai Hari Ini!</span>
+            </h2>
+            <p class="text-lg md:text-xl mb-10 opacity-90">
+                Aplikasi "Keuangan Saya" membantu Anda melacak pengeluaran, membuat anggaran cerdas, dan mencapai tujuan finansial dengan mudah.
+            </p>
+            <a href="{{route('register')}}" class="bg-white text-indigo-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transition-all duration-300 transform hover:scale-105">
+                Daftar Gratis Sekarang
+            </a>
+            <div class="mt-12">
+                <!-- Placeholder for a compelling product screenshot/illustration -->
+                <img src="https://placehold.co/800x450/e0e7ff/3f51b5?text=Tampilan+Dasbor+Aplikasi" alt="Tampilan Aplikasi Keuangan Saya" class="rounded-xl shadow-2xl mx-auto w-full max-w-xl md:max-w-3xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 md:py-24 px-4">
+        <div class="container mx-auto">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Fitur Unggulan Kami</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <x-card
+                    title="Pelacakan Otomatis"
+                    description="Sinkronkan rekening bank, e-wallet, dan kartu kredit Anda untuk pelacakan transaksi otomatis dan akurat."
+                    icon="document.png"
+                    color="bg-indigo-100"
+                    route="features">
+                </x-card>
+                {{-- Feature 2 --}}
+                <x-card
+                    title="Anggaran Cerdas"
+                    description="Buat anggaran yang fleksibel dengan berbagai metodologi (zero-based, amplop, persentase) dan notifikasi."
+                    icon="analytics.png"
+                    color="bg-green-100"
+                    route="features" />
+
+                {{-- Feature 3 --}}
+                <x-card
+                    title="Pelacakan Tujuan"
+                    description="Tetapkan dan lacak tujuan finansial Anda, seperti dana darurat, uang muka rumah, atau liburan impian."
+                    icon="goal.png"
+                    color="bg-indigo-100"
+                    route="features"
+                />
+
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 bg-indigo-100 rounded-full mb-4">
+                        <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Pelacakan Otomatis</h4>
+                    <p class="text-gray-600">Sinkronkan rekening bank, e-wallet, dan kartu kredit Anda untuk pelacakan transaksi otomatis dan akurat.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 bg-green-100 rounded-full mb-4">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Anggaran Cerdas</h4>
+                    <p class="text-gray-600">Buat anggaran yang fleksibel dengan berbagai metodologi (zero-based, amplop, persentase) dan notifikasi.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 bg-yellow-100 rounded-full mb-4">
+                        <svg class="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13m0 0a9 9 0 1018 0a9 9 0 00-18 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Wawasan AI Proaktif</h4>
+                    <p class="text-gray-600">Dapatkan rekomendasi pengeluaran, identifikasi potensi tabungan, dan prakiraan arus kas berbasis AI.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 bg-purple-100 rounded-full mb-4">
+                        <svg class="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V9a1 1 0 00-1-1H7a1 1 0 00-1 1v2.586l-1.586 1.586A2 2 0 013 14.586V17a2 2 0 002 2h14a2 2 0 002-2v-2.414a2 2 0 01.586-1.414L18 9.414V8a1 1 0 00-1-1h-4a1 1 0 00-1 1z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Pelacakan Tujuan</h4>
+                    <p class="text-gray-600">Tetapkan dan lacak tujuan finansial Anda, seperti dana darurat, uang muka rumah, atau liburan impian.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 bg-red-100 rounded-full mb-4">
+                        <svg class="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Pengingat Tagihan</h4>
+                    <p class="text-gray-600">Dapatkan notifikasi tepat waktu untuk tagihan yang akan datang agar Anda tidak pernah melewatkan pembayaran.</p>
+                </div>
+                <!-- Feature 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 bg-blue-100 rounded-full mb-4">
+                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17.25v-4.5c0-.728.684-1.353 1.348-1.127l.794.265c.571.19.992.684.992 1.282V17.25h-3zm-2.25-4.5V20.25a.75.75 0 00.75.75H17.5a.75.75 0 00.75-.75V12.75a.75.75 0 00-.75-.75H11.25a.75.75 0 00-.75.75zM12 9.75a.75.75 0 01.75-.75h.008v.008H12.75A.75.75 0 0112 9.75zm1.5 0a.75.75 0 01.75-.75h.008v.008H13.5A.75.75 0 0113.5 9.75z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Laporan Mendalam</h4>
+                    <p class="text-gray-600">Dapatkan gambaran jelas tentang arus kas, nilai bersih, dan pengeluaran Anda dengan laporan visual yang komprehensif.</p>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-            <!-- Kolom Kiri: Ringkasan & Wawasan -->
-            <div class="lg:col-span-2 space-y-6">
-
-                <!-- Ringkasan Saldo Akun -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Ringkasan Saldo Akun</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-indigo-50 p-4 rounded-lg flex flex-col items-center justify-center">
-                            <span class="text-gray-500 text-sm">Total Saldo</span>
-                            <span class="text-2xl font-bold text-indigo-700">Rp 15.750.000</span>
-                        </div>
-                        <div class="bg-blue-50 p-4 rounded-lg flex flex-col items-center justify-center">
-                            <span class="text-gray-500 text-sm">Rekening Tabungan</span>
-                            <span class="text-xl font-semibold text-blue-700">Rp 10.000.000</span>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg flex flex-col items-center justify-center">
-                            <span class="text-gray-500 text-sm">Kartu Kredit</span>
-                            <span class="text-xl font-semibold text-green-700">-Rp 2.500.000</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Lihat Semua Akun</button>
-                    </div>
-                </section>
-
-                <!-- Wawasan Cepat Berbasis AI -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Wawasan Cepat</h2>
-                    <div class="space-y-3">
-                        <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 rounded-md flex items-center">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span>Anda menghabiskan <span class="font-semibold">15% lebih banyak</span> untuk makanan di luar bulan ini. Coba batasi pengeluaran.</span>
-                        </div>
-                        <div class="bg-green-50 border-l-4 border-green-400 text-green-800 p-4 rounded-md flex items-center">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span>Potensi tabungan Rp 50.000 dari langganan *streaming* yang tidak terpakai.</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Lihat Semua Wawasan</button>
-                    </div>
-                </section>
-
-                <!-- Diagram Lingkaran Rincian Pengeluaran berdasarkan Kategori -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Rincian Pengeluaran (Bulan Ini)</h2>
-                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
-                        <!-- Placeholder for Pie Chart. In a real app, this would be a charting library (e.g., Chart.js, D3.js) -->
-                        <div class="relative w-48 h-48 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-semibold text-sm border-2 border-dashed border-gray-300">
-                            [Diagram Lingkaran Pengeluaran]
-                            <!-- Example segments (purely visual, not functional) -->
-                            <div class="absolute inset-0 rounded-full" style="background: conic-gradient(#818cf8 0% 30%, #a78bfa 30% 55%, #c084fc 55% 70%, #e879f9 70% 85%, #f472b6 85% 100%);"></div>
-                        </div>
-                        <ul class="space-y-2">
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-indigo-400"></span>Makanan: Rp 2.500.000 (30%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-purple-400"></span>Transportasi: Rp 1.800.000 (25%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-violet-400"></span>Hiburan: Rp 1.200.000 (15%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-pink-400"></span>Belanja: Rp 1.000.000 (10%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-rose-400"></span>Lain-lain: Rp 1.000.000 (20%)</li>
-                        </ul>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Laporan Pengeluaran Lengkap</button>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Kolom Kanan: Tujuan & Tagihan -->
-            <div class="lg:col-span-1 space-y-6">
-
-                <!-- Bilah Kemajuan Tujuan Tabungan -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Kemajuan Tujuan Keuangan</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between items-center text-gray-700 text-sm mb-1">
-                                <span>Dana Darurat (Rp 10.000.000)</span>
-                                <span>Rp 7.000.000 / 70%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 70%;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center text-gray-700 text-sm mb-1">
-                                <span>Uang Muka Rumah (Rp 50.000.000)</span>
-                                <span>Rp 15.000.000 / 30%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 30%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm">
-                            Kelola Tujuan
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Daftar Tagihan yang Akan Datang -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Tagihan Akan Datang</h2>
-                    <ul class="divide-y divide-gray-200">
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium text-gray-800">Internet</p>
-                                <p class="text-sm text-gray-500">Jatuh Tempo: 10 Juni 2025</p>
-                            </div>
-                            <span class="font-semibold text-gray-700">Rp 300.000</span>
-                        </li>
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium text-gray-800">Listrik</p>
-                                <p class="text-sm text-gray-500">Jatuh Tempo: 15 Juni 2025</p>
-                            </div>
-                            <span class="font-semibold text-gray-700">Rp 500.000</span>
-                        </li>
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium text-gray-800">Pinjaman Kendaraan</p>
-                                <p class="text-sm text-gray-500">Jatuh Tempo: 20 Juni 2025</p>
-                            </div>
-                            <span class="font-semibold text-gray-700">Rp 1.500.000</span>
-                        </li>
-                    </ul>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Lihat Semua Tagihan</button>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer (simple) -->
-    <footer class="bg-gray-800 text-white p-4 text-center text-sm mt-8">
+    <!-- Call to Action Section -->
+    <section class="bg-indigo-700 text-white py-16 md:py-20 text-center px-4 rounded-xl shadow-lg mt-16 mx-auto w-11/12 max-w-5xl">
         <div class="container mx-auto">
-            &copy; 2025 Keuangan Pribadi. Hak Cipta Dilindungi Undang-Undang.
-        </div>
-    </footer>
+            <h3 class="text-3xl md:text-4xl font-bold mb-6">Siap Mengatur Keuangan Anda?</h3>
+            <p class="text-lg md:text-xl mb-8 opacity-90">
+                Bergabunglah dengan ribuan pengguna yang telah mengambil alih kendali keuangan mereka.
+            </p>
 
+            <x-button link="register" label="Mulai Gratis Sekarang!">
+
+            </x-button>
+        </div>
+    </section>
+
+<x-footer/>
 </body>
 </html>
