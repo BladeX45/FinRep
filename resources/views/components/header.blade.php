@@ -7,9 +7,10 @@
             </h1>
             <nav>
                 <ul class="flex space-x-6 text-gray-600">
-                    <li><a href="#" class="hover:text-indigo-600 font-medium">Dashboard</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Transaksi</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Anggaran</a></li>
+                    <li><a href="{{route("dashboard")}}" class="hover:text-indigo-600 font-medium">Dashboard</a></li>
+                    <li><a href="{{route("transactions")}}" class="hover:text-indigo-600">Transaksi</a></li>
+                    <li><a href="{{route("pages.accounts.index")}}" class="hover:text-indigo-600">Akun</a></li>
+                    <li><a href="{{route("pages.budgets.index")}}" class="hover:text-indigo-600">Anggaran</a></li>
                     <li><a href="#" class="hover:text-indigo-600">Tujuan</a></li>
                     <li><a href="#" class="hover:text-indigo-600">Laporan</a></li>
                 </ul>

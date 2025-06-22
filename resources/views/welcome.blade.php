@@ -136,7 +136,7 @@
                 Bergabunglah dengan ribuan pengguna yang telah mengambil alih kendali keuangan mereka.
             </p>
 
-            <x-button link="register" label="Mulai Gratis Sekarang!">
+            <x-button link="register" label="Mulai Gratis Sekarang!" color="bg-white">
 
             </x-button>
         </div>

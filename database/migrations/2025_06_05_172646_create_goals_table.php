@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('target_amount', 15, 2);
             $table->decimal('current_amount', 15, 2)->default(0);
             $table->date('target_date');
-            $table->enum('goal_type', ['Savings', 'Debt Payoff']);
+            $table->string('goal_type');
             $table->timestamps();
         });
     }

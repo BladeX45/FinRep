@@ -12,7 +12,7 @@ class button extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($link, $label, $color='')
+    public function __construct($link, $label, $color='primary')
     {
         $this->link = $link;
         $this->label = $label;

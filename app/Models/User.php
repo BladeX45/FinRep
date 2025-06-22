@@ -45,6 +45,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // get id
+    public function id(): int
+    {
+        return $this->id;
+    }
     public function accounts() {
         return $this->hasMany(Account::class);
     }

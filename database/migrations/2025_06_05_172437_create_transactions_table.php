@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('transaction_date');
             $table->decimal('amount', 15, 2);
             $table->text('description')->nullable();
-            $table->enum('transaction_type', ['Income', 'Expense', 'Transfer']);
+            $table->enum('transaction_type', ['Income', 'Expense', 'Transfer','Transfer-In', 'Transfer-Out']);
             $table->boolean('is_recurring')->default(false);
             $table->string('receipt_url')->nullable();
             $table->timestamps();

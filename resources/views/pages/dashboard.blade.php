@@ -1,150 +1,210 @@
 <x-layouts.layout :titleApps="'Dashboard'">
 <main class="flex-grow container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <!-- Kolom Kiri: Ringkasan & Wawasan -->
-            <div class="lg:col-span-2 space-y-6">
+        <!-- Kolom Kiri: Ringkasan & Wawasan -->
+        <div class="lg:col-span-2 space-y-6">
 
-                <!-- Ringkasan Saldo Akun -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-2 md:col-span-1">
-                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Ringkasan Saldo Akun</h2>
-                        </div>
-                        <div class="col-span-2 md:col-span-1 text-right">
-                            <x-button
-                            :link="'create.account'"
-                            :label="'+Account'"
-                            :color="'bg-indigo-400'">
-                            </x-button>
-                        </div>
+            <!-- Ringkasan Saldo Akun -->
+            <section class="bg-white p-6 rounded-xl shadow-md">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2 md:col-span-1">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Ringkasan Saldo Akun</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-indigo-50 p-4 rounded-lg flex flex-col items-center justify-center">
-                            <span class="text-gray-500 text-sm">Total Saldo</span>
-                            <span class="text-2xl font-bold text-indigo-700">Rp 15.750.000</span>
-                        </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    @php
+                        $total = $balances->sum();
+                    @endphp
+                    <div class="bg-indigo-50 p-4 rounded-lg flex flex-col items-center justify-center">
+                        <span class="text-gray-500 text-sm">Total Saldo</span>
+                        <span class="text-2xl font-bold text-indigo-700">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                    </div>
+                    @foreach($balances as $currency => $amount)
                         <div class="bg-blue-50 p-4 rounded-lg flex flex-col items-center justify-center">
-                            <span class="text-gray-500 text-sm">Rekening Tabungan</span>
-                            <span class="text-xl font-semibold text-blue-700">Rp 10.000.000</span>
+                            <span class="text-gray-500 text-sm">Saldo ({{ $currency }})</span>
+                            <span class="text-xl font-semibold text-blue-700">Rp {{ number_format($amount, 0, ',', '.') }}</span>
                         </div>
-                        <div class="bg-green-50 p-4 rounded-lg flex flex-col items-center justify-center">
-                            <span class="text-gray-500 text-sm">Kartu Kredit</span>
-                            <span class="text-xl font-semibold text-green-700">-Rp 2.500.000</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Lihat Semua Akun</button>
-                    </div>
-                </section>
+                    @endforeach
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="-" class="text-indigo-600 hover:underline text-sm">Lihat Semua Akun</a>
+                </div>
+            </section>
 
-                <!-- Wawasan Cepat Berbasis AI -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Wawasan Cepat</h2>
-                    <div class="space-y-3">
-                        <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 rounded-md flex items-center">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span>Anda menghabiskan <span class="font-semibold">15% lebih banyak</span> untuk makanan di luar bulan ini. Coba batasi pengeluaran.</span>
+            <!-- Wawasan Cepat Berbasis AI -->
+            <section class="bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Wawasan Cepat</h2>
+                <div class="space-y-3">
+                    @foreach($insights as $insight)
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 rounded-md flex items-start">
+                            <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>{!! $insight !!}</span>
                         </div>
-                        <div class="bg-green-50 border-l-4 border-green-400 text-green-800 p-4 rounded-md flex items-center">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span>Potensi tabungan Rp 50.000 dari langganan *streaming* yang tidak terpakai.</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Lihat Semua Wawasan</button>
-                    </div>
-                </section>
+                    @endforeach
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="#" class="text-indigo-600 hover:underline text-sm">Lihat Semua Wawasan</a>
+                </div>
+            </section>
 
-                <!-- Diagram Lingkaran Rincian Pengeluaran berdasarkan Kategori -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Rincian Pengeluaran (Bulan Ini)</h2>
-                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
-                        <!-- Placeholder for Pie Chart. In a real app, this would be a charting library (e.g., Chart.js, D3.js) -->
-                        <div class="relative w-48 h-48 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-semibold text-sm border-2 border-dashed border-gray-300">
-                            [Diagram Lingkaran Pengeluaran]
-                            <!-- Example segments (purely visual, not functional) -->
-                            <div class="absolute inset-0 rounded-full" style="background: conic-gradient(#818cf8 0% 30%, #a78bfa 30% 55%, #c084fc 55% 70%, #e879f9 70% 85%, #f472b6 85% 100%);"></div>
-                        </div>
-                        <ul class="space-y-2">
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-indigo-400"></span>Makanan: Rp 2.500.000 (30%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-purple-400"></span>Transportasi: Rp 1.800.000 (25%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-violet-400"></span>Hiburan: Rp 1.200.000 (15%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-pink-400"></span>Belanja: Rp 1.000.000 (10%)</li>
-                            <li class="flex items-center text-gray-700"><span class="block w-3 h-3 rounded-full mr-2 bg-rose-400"></span>Lain-lain: Rp 1.000.000 (20%)</li>
-                        </ul>
+            <!-- Diagram Lingkaran Rincian Pengeluaran berdasarkan Kategori -->
+        <!-- Rincian Pengeluaran (Bulan Ini) -->
+       <!-- Rincian Pengeluaran (Bulan Ini) -->
+            <section class="bg-white p-6 rounded-xl shadow-md mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Rincian Pengeluaran (Bulan Ini)</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div class="w-48 h-48">
+                        <canvas id="expensePieChart" width="300" height="300"></canvas>
                     </div>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Laporan Pengeluaran Lengkap</button>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Kolom Kanan: Tujuan & Tagihan -->
-            <div class="lg:col-span-1 space-y-6">
-
-                <!-- Bilah Kemajuan Tujuan Tabungan -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Kemajuan Tujuan Keuangan</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between items-center text-gray-700 text-sm mb-1">
-                                <span>Dana Darurat (Rp 10.000.000)</span>
-                                <span>Rp 7.000.000 / 70%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 70%;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center text-gray-700 text-sm mb-1">
-                                <span>Uang Muka Rumah (Rp 50.000.000)</span>
-                                <span>Rp 15.000.000 / 30%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 30%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm">
-                            Kelola Tujuan
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Daftar Tagihan yang Akan Datang -->
-                <section class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Tagihan Akan Datang</h2>
-                    <ul class="divide-y divide-gray-200">
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium text-gray-800">Internet</p>
-                                <p class="text-sm text-gray-500">Jatuh Tempo: 10 Juni 2025</p>
-                            </div>
-                            <span class="font-semibold text-gray-700">Rp 300.000</span>
-                        </li>
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium text-gray-800">Listrik</p>
-                                <p class="text-sm text-gray-500">Jatuh Tempo: 15 Juni 2025</p>
-                            </div>
-                            <span class="font-semibold text-gray-700">Rp 500.000</span>
-                        </li>
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium text-gray-800">Pinjaman Kendaraan</p>
-                                <p class="text-sm text-gray-500">Jatuh Tempo: 20 Juni 2025</p>
-                            </div>
-                            <span class="font-semibold text-gray-700">Rp 1.500.000</span>
-                        </li>
+                    <ul class="space-y-2">
+                        @php $totalExpense = $expenseChart->sum('total'); @endphp
+                        @foreach($expenseChart as $item)
+                            @php $percent = $totalExpense ? round(($item->total / $totalExpense) * 100, 1) : 0; @endphp
+                            <li class="flex items-center text-gray-700">
+                                <span class="block w-3 h-3 rounded-full mr-2" style="background-color: #{{ substr(md5($item->category), 0, 6) }}"></span>
+                                {{ $item->category }}: Rp {{ number_format($item->total, 0, ',', '.') }} ({{ $percent }}%)
+                            </li>
+                        @endforeach
                     </ul>
-                    <div class="mt-4 text-center">
-                        <button class="text-indigo-600 hover:underline text-sm">Lihat Semua Tagihan</button>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </main>
-</x-layouts.layout>
+                </div>
+            </section>
 
+            <!-- Rincian Pemasukan (Bulan Ini) -->
+            <section class="bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Rincian Pemasukan (Bulan Ini)</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div class="w-48 h-48">
+                        <canvas id="incomePieChart" width="300" height="300"></canvas>
+                    </div>
+                    <ul class="space-y-2">
+                        @php $totalIncome = $incomeChart->sum('total'); @endphp
+                        @foreach($incomeChart as $item)
+                            @php $percent = $totalIncome ? round(($item->total / $totalIncome) * 100, 1) : 0; @endphp
+                            <li class="flex items-center text-gray-700">
+                                <span class="block w-3 h-3 rounded-full mr-2" style="background-color: #{{ substr(md5($item->category), 0, 6) }}"></span>
+                                {{ $item->category }}: Rp {{ number_format($item->total, 0, ',', '.') }} ({{ $percent }}%)
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Kolom Kanan: Tujuan & Tagihan -->
+        <div class="lg:col-span-1 space-y-6">
+
+            <!-- Bilah Kemajuan Tujuan Tabungan -->
+            <section class="bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Kemajuan Tujuan Keuangan</h2>
+                <div class="space-y-4">
+                    @foreach($goals as $goal)
+                        <div>
+                            <div class="flex justify-between items-center text-gray-700 text-sm mb-1">
+                                <span>{{ $goal['name'] }} (Rp {{ number_format($goal['target'], 0, ',', '.') }})</span>
+                                <span>Rp {{ number_format($goal['current'], 0, ',', '.') }} / {{ $goal['progress_percent'] }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: {{ $goal['progress_percent'] }}%;"></div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="#" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm">
+                        Kelola Tujuan
+                    </a>
+                </div>
+            </section>
+
+            <!-- Daftar Tagihan yang Akan Datang -->
+            <section class="bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Tagihan Akan Datang</h2>
+                <ul class="divide-y divide-gray-200">
+                    @forelse($nextBills as $bill)
+                        <li class="py-3 flex justify-between items-center">
+                            <div>
+                                <p class="font-medium text-gray-800">{{ $bill->category->name ?? 'Tidak diketahui' }}</p>
+                                <p class="text-sm text-gray-500">Jatuh Tempo: {{ \Carbon\Carbon::parse($bill->transaction_date)->format('d F Y') }}</p>
+                            </div>
+                            <span class="font-semibold text-gray-700">Rp {{ number_format($bill->amount, 0, ',', '.') }}</span>
+                        </li>
+                    @empty
+                        <li class="py-3 text-center text-gray-500">Tidak ada tagihan dalam waktu dekat.</li>
+                    @endforelse
+                </ul>
+                <div class="mt-4 text-center">
+                    <a href="#" class="text-indigo-600 hover:underline text-sm">Lihat Semua Tagihan</a>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const expenseCtx = document.getElementById('expensePieChart').getContext('2d');
+    const incomeCtx = document.getElementById('incomePieChart').getContext('2d');
+
+    const expenseData = {
+        labels: {!! json_encode($expenseChart->pluck('category')) !!},
+        datasets: [{
+            data: {!! json_encode($expenseChart->pluck('total')) !!},
+            backgroundColor: {!! json_encode($expenseChart->map(fn($item) => '#' . substr(md5($item->category), 0, 6))) !!}
+        }]
+    };
+
+    const incomeData = {
+        labels: {!! json_encode($incomeChart->pluck('category')) !!},
+        datasets: [{
+            data: {!! json_encode($incomeChart->pluck('total')) !!},
+            backgroundColor: {!! json_encode($incomeChart->map(fn($item) => '#' . substr(md5($item->category), 0, 6))) !!}
+        }]
+    };
+
+    new Chart(expenseCtx, {
+        type: 'pie',
+        data: expenseData,
+        options: {
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let val = context.parsed;
+                            return `${context.label}: Rp ${val.toLocaleString('id-ID')}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    new Chart(incomeCtx, {
+        type: 'pie',
+        data: incomeData,
+        options: {
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let val = context.parsed;
+                            return `${context.label}: Rp ${val.toLocaleString('id-ID')}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
+</x-layouts.layout>

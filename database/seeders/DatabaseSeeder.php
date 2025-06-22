@@ -2,23 +2,25 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Models\Debt;
+use App\Models\Goal;
 use App\Models\User;
+use App\Models\Budget;
 use App\Models\Account;
 use App\Models\Category;
-use App\Models\Transaction;
-use App\Models\Budget;
-use App\Models\Goal;
-use App\Models\RecurringTransaction;
-use App\Models\Debt;
 use App\Models\Investment;
+use App\Models\Transaction;
+use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use App\Models\RecurringTransaction;
+use Illuminate\Support\Facades\Hash;
+use Database\Seeders\DashboardSeeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(DashboardSeeder::class);
         User::factory()->count(3)->create()->each(function ($user) {
             // Accounts
             $account = Account::create([
