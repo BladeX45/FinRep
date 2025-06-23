@@ -32,4 +32,17 @@ class Budget extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function getCurrentSpentAttribute()
+    {
+        return \App\Models\Transaction::where('category_id', $this->category_id)
+            ->where('transaction_type', 'Expense') // atau 'Cre', sesuai implementasi
+            ->whereBetween('transaction_date', [$this->start_date, $this->end_date])
+            ->sum('amount');
+    }
+
+    public function getRemainingAmountAttribute()
+    {
+        return max(0, $this->budget_amount - $this->current_spent);
+    }
+
 }

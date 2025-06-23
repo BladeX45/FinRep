@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\Goal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,6 @@ class TransactionController extends Controller
 {
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'date' => 'required|date',
             'account_id' => 'required|exists:accounts,id',
@@ -21,6 +21,7 @@ class TransactionController extends Controller
             'amount' => 'required|numeric|min:0',
             'type' => 'required|in:Deb,Cre,Tf',
             'destination_account_id' => 'nullable|exists:accounts,id|different:account_id',
+            'goal_id' => 'nullable|exists:goals,id',
             'is_recurring' => 'nullable|in:on,1,true',
         ]);
 
@@ -31,15 +32,13 @@ class TransactionController extends Controller
             $amount = $request->amount;
             $type = strtoupper($request->type);
 
-            // Validasi akun sumber
             $account = $user->accounts()->where('id', $request->account_id)->first();
             if (!$account) {
                 throw new \Exception('Akun sumber tidak ditemukan.');
             }
 
-            // Cek jika Transfer
+            // ============ Transfer ============
             if ($type === 'TF') {
-                // Validasi akun tujuan
                 $destinationAccount = $user->accounts()->where('id', $request->destination_account_id)->first();
                 if (!$destinationAccount) {
                     throw new \Exception('Akun tujuan tidak ditemukan.');
@@ -50,13 +49,10 @@ class TransactionController extends Controller
                 }
 
                 // Update saldo
-                $account->current_balance -= $amount;
-                $destinationAccount->current_balance += $amount;
+                $account->decrement('current_balance', $amount);
+                $destinationAccount->increment('current_balance', $amount);
 
-                $account->save();
-                $destinationAccount->save();
-
-                // Simpan transaksi masuk di akun tujuan
+                // Transaksi masuk di akun tujuan
                 Transaction::create([
                     'account_id'       => $destinationAccount->id,
                     'category_id'      => $request->category_id,
@@ -70,25 +66,38 @@ class TransactionController extends Controller
                 $transactionType = 'Transfer';
             }
 
-            // Jika Pemasukan atau Pengeluaran
-            if ($type === 'DEB') {
-                $account->current_balance += $amount;
-                $account->save();
+            // ============ Pemasukan ============
+            elseif ($type === 'DEB') {
+                $account->increment('current_balance', $amount);
                 $transactionType = 'Income';
+            }
 
-            } elseif ($type === 'CRE') {
+            // ============ Pengeluaran ============
+            elseif ($type === 'CRE') {
                 if ($account->current_balance < $amount) {
                     throw new \Exception('Saldo tidak mencukupi.');
                 }
-                $account->current_balance -= $amount;
-                $account->save();
+
+                $account->decrement('current_balance', $amount);
                 $transactionType = 'Expense';
+
+                // Jika ditujukan ke goal, tambahkan progres goal
+                if ($request->filled('goal_id')) {
+                    $goal = Goal::where('id', $request->goal_id)
+                        ->where('user_id', $user->id)
+                        ->first();
+
+                    if ($goal) {
+                        $goal->increment('current_amount', $amount);
+                    }
+                }
             }
 
-            // Simpan transaksi utama
+            // ============ Simpan Transaksi ============
             Transaction::create([
                 'account_id'       => $account->id,
                 'category_id'      => $request->category_id,
+                'goal_id'          => $request->goal_id ?? null,
                 'transaction_date' => $request->date,
                 'amount'           => $amount,
                 'description'      => $request->description,
@@ -98,6 +107,7 @@ class TransactionController extends Controller
 
             DB::commit();
             return redirect()->route('transactions')->with('success', 'Transaksi berhasil ditambahkan.');
+
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Gagal menyimpan transaksi: ' . $e->getMessage());

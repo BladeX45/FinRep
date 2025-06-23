@@ -11,7 +11,7 @@
                     <li><a href="{{route("transactions")}}" class="hover:text-indigo-600">Transaksi</a></li>
                     <li><a href="{{route("pages.accounts.index")}}" class="hover:text-indigo-600">Akun</a></li>
                     <li><a href="{{route("pages.budgets.index")}}" class="hover:text-indigo-600">Anggaran</a></li>
-                    <li><a href="#" class="hover:text-indigo-600">Tujuan</a></li>
+                    <li><a href="{{route("pages.goals.index")}}" class="hover:text-indigo-600">Goals</a></li>
                     <li><a href="#" class="hover:text-indigo-600">Laporan</a></li>
                 </ul>
             </nav>

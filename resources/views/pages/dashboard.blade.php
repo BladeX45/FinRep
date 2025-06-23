@@ -142,6 +142,43 @@
                     <a href="#" class="text-indigo-600 hover:underline text-sm">Lihat Semua Tagihan</a>
                 </div>
             </section>
+            <!-- Ringkasan Anggaran -->
+            <section class="bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Ringkasan Anggaran</h2>
+                @php
+                    $totalBudget = $budgets->sum('budget_amount');
+                    $totalSpent = $budgets->sum('current_spent');
+                    $remaining = $totalBudget - $totalSpent;
+                    $percentUsed = $totalBudget > 0 ? round(($totalSpent / $totalBudget) * 100) : 0;
+                @endphp
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-sm text-gray-500">Total Anggaran</p>
+                        <p class="text-lg font-bold text-blue-700">Rp {{ number_format($totalBudget, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="p-4 bg-yellow-50 rounded-lg">
+                        <p class="text-sm text-gray-500">Pengeluaran Saat Ini</p>
+                        <p class="text-lg font-bold text-yellow-600">Rp {{ number_format($totalSpent, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded-lg">
+                        <p class="text-sm text-gray-500">Sisa Anggaran</p>
+                        <p class="text-lg font-bold text-green-700">Rp {{ number_format($remaining, 0, ',', '.') }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="h-3 rounded-full bg-indigo-600" style="width: {{ $percentUsed }}%"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1 text-center">Terpakai: {{ $percentUsed }}%</p>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a href="{{ route('pages.budgets.index') }}" class="text-indigo-600 hover:underline text-sm">Lihat Detail Anggaran</a>
+                </div>
+            </section>
+
         </div>
     </div>
 </main>

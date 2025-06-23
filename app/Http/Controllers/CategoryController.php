@@ -29,8 +29,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi input
+        $validated = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'category_type' => 'required|in:Income,Expense,Transfer',
+        ]);
+
+        // Simpan kategori menggunakan mass assignment
+        Category::create([
+            'category_name' => $validated['category_name'],
+            'category_type' => $validated['category_type'],
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()
+            ->route('pages.budgets.index')
+            ->with('success', 'Kategori berhasil ditambahkan.');
     }
+
 
     /**
      * Display the specified resource.
